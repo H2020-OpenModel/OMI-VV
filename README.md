@@ -29,7 +29,7 @@ model to predict the atomisation energy at unknown distance values, 1.1, 1.2, an
 ![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/images/image2.png)
 
 
-The `verification()` function uses a neural network (multi layer process regression) to predict new values, in this case atomisation energy at distance 1.1, 1.2, 1.3 Ang.
+The `verification()` function uses a neural network (multi layer perception regression) to predict new values, in this case atomisation energy at distance 1.1, 1.2, 1.3 Ang.
 Output.txt will contain the predicted values, and a confidence interval which is determined through conformal prediction. If plotting is specified, a plot of the predicted values (output.png) is also created. 
 
 
