@@ -13,6 +13,7 @@ from IPython.display import display
 from omikb.omikb import kb_toolbox
 
 
+
 def process_response(response):
     # Parse JSON response
     data = response.json()
@@ -164,3 +165,34 @@ def verification():
 
     # Display widgets
     display(endpoint_url_widget, new_d_values_widget, d_key_widget, e_key_widget, save_figure_widget, button)
+
+
+def upload():
+
+    kb_instance = kb_toolbox()
+
+    # Widgets for user input
+    endpoint_url_widget = widgets.Text(description='Database:', placeholder='Enter database endpoint URL')
+    dataset_widget = widgets.Text(description='Dataset:',
+                                       placeholder='Enter dataset .ttl file')
+
+
+    # Button to trigger processing
+    button = widgets.Button(description='Upload')
+
+    # Define button click handler
+    def on_button_click(b):
+        dataset = dataset_widget.value
+
+        try:
+            kb_instance.import_ontology(dataset)
+        except ValueError:
+            print("Error: Could not upload to knowledge base")
+            return
+
+    button.on_click(on_button_click)
+
+    # Display widgets
+    display(endpoint_url_widget, dataset_widget, button)
+
+
