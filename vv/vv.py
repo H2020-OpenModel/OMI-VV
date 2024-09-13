@@ -179,7 +179,7 @@ def visualize_triples(existing_triples, added_triples):
             edge['color'] = 'green'
 
     # Save the visualization to an HTML file
-    net.show("triples_visualization.html")
+    net.show("visualization.html")
 
 
 def verification():
