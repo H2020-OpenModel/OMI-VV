@@ -8,10 +8,13 @@ from nonconformist.cp import IcpRegressor
 from nonconformist.nc import AbsErrorErrFunc
 import ipywidgets as widgets
 from IPython.display import display
+from pyvis.network import Network
+import networkx as nx
+from rdflib import Graph
+import json
 
 # Import kb_toolbox
 from omikb.omikb import kb_toolbox
-
 
 
 def process_response(response):
@@ -131,6 +134,53 @@ def plot_results(X_train, y_train, X_test, y_test, new_d_values, prediction_inte
     if save_figure:
         plt.savefig("output.png")  # Save the plot if the switch is set
 
+def visualize_triples(existing_triples, added_triples):
+    # Limit the number of triples from the existing knowledge base
+    existing_triples_subset = existing_triples[:2000]
+
+    # Create NetworkX graphs from RDF triples
+    nx_existing_graph = nx.DiGraph()
+    for subj, pred, obj in existing_triples_subset:
+        nx_existing_graph.add_node(subj, label=subj)
+        nx_existing_graph.add_node(obj, label=obj)
+        nx_existing_graph.add_edge(subj, obj, label=pred)
+
+    nx_added_graph = nx.DiGraph()
+    for subj, pred, obj in added_triples:
+        nx_added_graph.add_node(subj, label=subj)
+        nx_added_graph.add_node(obj, label=obj)
+        nx_added_graph.add_edge(subj, obj, label=pred)
+
+    # Create a PyVis network
+    net = Network(notebook=True, cdn_resources='in_line')
+
+    # Add existing triples to the network with dark blue nodes and edges
+    net.from_nx(nx_existing_graph)
+    for node in net.nodes:
+        node_id = node['id']
+        if node_id in [s for s, _, _ in existing_triples_subset] or node_id in [o for _, _, o in
+                                                                                existing_triples_subset]:
+            node['color'] = 'darkblue'
+            node['font'] = {'color': 'black'}
+
+    for edge in net.edges:
+        if (edge['from'], edge['to']) in [(s, o) for s, _, o in existing_triples_subset]:
+            edge['color'] = 'darkblue'
+
+    # Add added triples to the network with green nodes and edges
+    net.from_nx(nx_added_graph)
+    for node in net.nodes:
+        if node['id'] in [s for s, _, _ in added_triples] or node['id'] in [o for _, _, o in added_triples]:
+            node['color'] = 'green'
+            node['font'] = {'color': 'black'}
+
+    for edge in net.edges:
+        if (edge['from'], edge['to']) in [(s, o) for s, _, o in added_triples]:
+            edge['color'] = 'green'
+
+    # Save the visualization to an HTML file
+    net.show("triples_visualization.html")
+
 
 def verification():
     # Initialize kb_toolbox instance
@@ -168,14 +218,13 @@ def verification():
 
 
 def upload():
-
     kb_instance = kb_toolbox()
 
     # Widgets for user input
     endpoint_url_widget = widgets.Text(description='Database:', placeholder='Enter database endpoint URL')
-    dataset_widget = widgets.Text(description='Dataset:',
-                                       placeholder='Enter dataset .ttl file')
-
+    dataset_widget = widgets.Text(description='Dataset:', placeholder='Enter dataset .ttl file')
+    visualize_widget = widgets.Checkbox(value=False, description='Visualize',
+                                        tooltip='Check to visualize triples')
 
     # Button to trigger processing
     button = widgets.Button(description='Upload')
@@ -183,9 +232,26 @@ def upload():
     # Define button click handler
     def on_button_click(b):
         dataset = dataset_widget.value
+        visualize = visualize_widget.value
 
         try:
             kb_instance.import_ontology(dataset)
+
+            if visualize:
+                # Load existing graph with a SPARQL query
+                response = kb_instance.query("SELECT ?s ?p ?o WHERE { ?s ?p ?o }")
+                existing_graph_data = response.json()
+                existing_triples = [(binding['s']['value'], binding['p']['value'], binding['o']['value'])
+                                    for binding in existing_graph_data['results']['bindings']]
+
+                # Load and parse the new dataset
+                g = Graph()
+                g.parse(dataset, format="turtle")
+                added_triples = [(str(subj), str(pred), str(obj)) for subj, pred, obj in g]
+
+                # Visualize triples
+                visualize_triples(existing_triples, added_triples)
+
         except ValueError:
             print("Error: Could not upload to knowledge base")
             return
@@ -193,6 +259,5 @@ def upload():
     button.on_click(on_button_click)
 
     # Display widgets
-    display(endpoint_url_widget, dataset_widget, button)
-
+    display(endpoint_url_widget, dataset_widget, visualize_widget, button)
 
