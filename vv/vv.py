@@ -134,6 +134,37 @@ def plot_results(X_train, y_train, X_test, y_test, new_d_values, prediction_inte
     if save_figure:
         plt.savefig("output.png")  # Save the plot if the switch is set
 
+
+# def visualize_triples(existing_triples, added_triples):
+#     # Limit the number of triples from the existing knowledge base
+#     existing_triples_subset = existing_triples[:1000]
+
+#     # Create NetworkX graphs from RDF triples
+#     nx_existing_graph = nx.DiGraph()
+#     for subj, pred, obj in existing_triples_subset:
+#         nx_existing_graph.add_node(subj, label=subj)
+#         nx_existing_graph.add_node(obj, label=obj)
+#         nx_existing_graph.add_edge(subj, obj, label=pred)
+
+#     nx_added_graph = nx.DiGraph()
+#     for subj, pred, obj in added_triples:
+#         nx_added_graph.add_node(subj, label=subj)
+#         nx_added_graph.add_node(obj, label=obj)
+#         nx_added_graph.add_edge(subj, obj, label=pred)
+
+#     # Create a PyVis network
+#     net = Network(notebook=True, cdn_resources='in_line')
+#     net.from_nx(nx_existing_graph)
+
+#     # Add added triples in a different color
+#     net.from_nx(nx_added_graph)
+#     for edge in net.edges:
+#         if (edge['from'], edge['to']) in [(s, o) for s, _, o in added_triples]:
+#             edge['color'] = 'green'
+
+#     # Save the visualization to an HTML file
+#     net.show("visualization.html")
+
 def visualize_triples(existing_triples, added_triples):
     # Limit the number of triples from the existing knowledge base
     existing_triples_subset = existing_triples[:2000]
@@ -223,7 +254,7 @@ def upload():
     # Widgets for user input
     endpoint_url_widget = widgets.Text(description='Database:', placeholder='Enter database endpoint URL')
     dataset_widget = widgets.Text(description='Dataset:', placeholder='Enter dataset .ttl file')
-    visualize_widget = widgets.Checkbox(value=False, description='Visualize',
+    visualize_widget = widgets.Checkbox(value=False, description='Visualize Triples',
                                         tooltip='Check to visualize triples')
 
     # Button to trigger processing
@@ -260,4 +291,79 @@ def upload():
 
     # Display widgets
     display(endpoint_url_widget, dataset_widget, visualize_widget, button)
+
+
+def remove(graph_iri, keyword):
+    """
+    Removes triples associated with a given keyword or subject from a specified graph in the knowledge graph.
+
+    :param graph_iri: The IRI of the graph from which to remove the triples.
+    :param keyword: The subject or keyword to search for and remove associated triples.
+    """
+    # SPARQL DELETE query
+    delete_query = f"""
+    DELETE WHERE {{
+      GRAPH <{graph_iri}> {{
+        ?s ?p ?o .
+        FILTER (regex(str(?s), "{keyword}", "i") ||
+                regex(str(?p), "{keyword}", "i") ||
+                regex(str(?o), "{keyword}", "i"))
+      }}
+    }}
+    """
+
+    print(f"Executing SPARQL DELETE query:\n{delete_query}\n")  # Debugging output
+
+    try:
+        response = requests.post("https://openmodel.app/fuseki3/dataset/update", data=delete_query, headers={
+            "Content-Type": "application/sparql-update",
+            "Authorization": f"Bearer YOUR_ACCESS_TOKEN"
+        })
+        print(f"HTTP Status Code: {response.status_code}")  # Debugging output
+        print(f"Response Text: {response.text}")  # Debugging output
+
+        if response.status_code == 200:
+            print(f"Successfully deleted triples associated with keyword: '{keyword}' from graph: '{graph_iri}'.")
+        else:
+            print(f"Error: {response.status_code} - {response.text}")
+    except requests.RequestException as e:
+        print(f"Failed to execute delete operation: {e}")
+
+
+def remove_widget():
+    # Widgets for user input
+    graph_iri_widget = widgets.Text(description='Graph IRI:', placeholder='Enter graph IRI')
+    keyword_widget = widgets.Text(description='Keyword:', placeholder='Enter keyword or subject to remove')
+
+    # Button to trigger the removal process
+    button = widgets.Button(description='Remove')
+
+    # Output widget to capture and display the output
+    output = widgets.Output()
+
+    # Define button click handler
+    def on_button_click(b):
+        with output:
+            output.clear_output()
+            graph_iri = graph_iri_widget.value
+            keyword = keyword_widget.value
+
+            # Ensure both graph_iri and keyword are not empty
+            if not graph_iri:
+                print("Error: Please enter a valid graph IRI.")
+                return
+            if not keyword:
+                print("Error: Please enter a valid keyword.")
+                return
+
+            # Attempt to remove triples associated with the keyword from the specified graph
+            try:
+                remove(graph_iri, keyword)
+            except Exception as e:
+                print(f"An error occurred: {e}")
+
+    button.on_click(on_button_click)
+
+    # Display widgets and output
+    display(graph_iri_widget, keyword_widget, button, output)
 
