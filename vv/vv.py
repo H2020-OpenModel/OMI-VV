@@ -1,3 +1,5 @@
+
+import yaml
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPRegressor
@@ -8,90 +10,75 @@ from nonconformist.cp import IcpRegressor
 from nonconformist.nc import AbsErrorErrFunc
 import ipywidgets as widgets
 from IPython.display import display
-from pyvis.network import Network
-import networkx as nx
-from rdflib import Graph
-import json
-
-# Import kb_toolbox
 from omikb.omikb import kb_toolbox
+import sys
+import os
+sys.path.append(os.path.abspath('../'))
+from discomat.cuds.cuds import Cuds
+from discomat.cuds.session import Session
+from discomat.visualisation.cuds_vis import gvis
+from discomat.ontology.namespaces import MIO
+import csv
+from rdflib import Literal, Graph
+import networkx as nx
 
+def load_yaml_file(filepath):
+    with open(filepath, 'r') as file:
+        return yaml.safe_load(file)
 
 def process_response(response):
-    # Parse JSON response
     data = response.json()
-
-    # Extract values
     values = []
     for binding in data['results']['bindings']:
         o = binding['o']
-        # Check if the object is a literal value and not a URI
         if o['type'] == 'literal':
             try:
-                # Attempt to convert the value to a float
                 value = float(o['value'])
                 values.append(value)
             except ValueError:
-                # If conversion fails, skip the value
                 continue
-
     return values
 
-
 def load_and_process_data(kb_toolbox_instance, d_key, e_key):
-    # Execute queries for both keys
     response1 = kb_toolbox_instance.search_keyword(d_key)
     response2 = kb_toolbox_instance.search_keyword(e_key)
-
-    # Extract values using the process_response function
     key1_values = process_response(response1)
     key2_values = process_response(response2)
 
-    # Ensure data arrays are not empty
     if not key1_values or not key2_values:
         print("Error: No data available for the given keys.")
         return np.array([]), np.array([])
 
-    # Convert lists to numpy arrays
     d_values = np.array(key1_values, dtype=float).reshape(-1, 1)
     e_atomization = np.array(key2_values, dtype=float)
 
     return d_values, e_atomization
 
-
 def train_and_predict(kb_toolbox_instance, new_d_values, save_figure, d_key, e_key):
-    # Load and process data
     d_values, e_atomization = load_and_process_data(kb_toolbox_instance, d_key, e_key)
 
-    # Check if the data is empty
     if d_values.size == 0 or e_atomization.size == 0:
         print("Error: No data available for the given keys.")
-        return
+        return new_d_values, None  # Return empty results
 
-    # Normalize d_values using StandardScaler
     scaler = StandardScaler()
     d_normalized = scaler.fit_transform(d_values)
 
-    # Check if there is sufficient data for training
     if d_normalized.shape[0] < 2:
         print("Error: Not enough data to train the model.")
-        return
+        return new_d_values, None  # Return empty results
 
-    # Split data into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(d_normalized, e_atomization, test_size=0.2, random_state=42)
 
-    # Initialize and fit MLPRegressor
     regressor = MLPRegressor(hidden_layer_sizes=(100, 100), activation='relu', alpha=0.001, max_iter=1000,
                              random_state=42)
     regressor.fit(X_train, y_train)
 
-    # Initialize conformal predictor
     nc = RegressorNc(regressor, err_func=AbsErrorErrFunc())
     icp = IcpRegressor(nc)
     icp.fit(X_train, y_train)
     icp.calibrate(X_test, y_test)
 
-    # Predict with conformal intervals
     new_d_values = np.array(new_d_values, dtype=float).reshape(-1, 1)
     new_d_normalized = scaler.transform(new_d_values)
     prediction_intervals = icp.predict(new_d_normalized, significance=0.05)
@@ -99,40 +86,26 @@ def train_and_predict(kb_toolbox_instance, new_d_values, save_figure, d_key, e_k
     # Save the predicted intervals for new d values to output.txt
     with open('output.txt', 'w') as f:
         for i, d in enumerate(new_d_values):
-            f.write(
-                f"Predicted {e_key} for {d_key} = {d[0]}: {prediction_intervals[i, 0]:.2f} to {prediction_intervals[i, 1]:.2f} eV\n")
+            f.write(f"Predicted {e_key} for {d_key} = {d[0]}: {prediction_intervals[i, 0]:.2f} to {prediction_intervals[i, 1]:.2f} eV\n")
 
-    xlabel = d_key
-    ylabel = e_key
+    # Return predictions and intervals for RDF generation
+    return new_d_values.flatten(), prediction_intervals
 
-    plot_results(X_train, y_train, X_test, y_test, new_d_values, prediction_intervals, scaler, xlabel, ylabel,
-                 save_figure)
-
-
-def plot_results(X_train, y_train, X_test, y_test, new_d_values, prediction_intervals, scaler, xlabel, ylabel,
-                 save_figure):
+def plot_results(X_train, y_train, X_test, y_test, new_d_values, prediction_intervals, scaler, xlabel, ylabel, save_figure):
     plt.figure(figsize=(10, 6))
-
-    # Plot training data in blue
     plt.scatter(scaler.inverse_transform(X_train), y_train, color='blue', label='Training Data')
-
-    # Plot testing data in green
     plt.scatter(scaler.inverse_transform(X_test), y_test, color='green', label='Testing Data')
-
-    # Plot predictions for new d values in red with error bars
     new_d_values = new_d_values.flatten()
     lower_bounds = prediction_intervals[:, 0]
     upper_bounds = prediction_intervals[:, 1]
-    plt.errorbar(new_d_values, (lower_bounds + upper_bounds) / 2, yerr=(upper_bounds - lower_bounds) / 2, fmt='o',
-                 color='red', label='Predictions')
-
+    plt.errorbar(new_d_values, (lower_bounds + upper_bounds) / 2, yerr=(upper_bounds - lower_bounds) / 2, fmt='o', color='red', label='Predictions')
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.legend()
     plt.grid(True)
 
     if save_figure:
-        plt.savefig("output.png")  # Save the plot if the switch is set
+        plt.savefig("output.png")  # Save the plot if the switch is set\
 
 def visualize_triples(existing_triples, added_triples):
     # Limit the number of triples from the existing knowledge base
@@ -179,7 +152,7 @@ def visualize_triples(existing_triples, added_triples):
             edge['color'] = 'green'
 
     # Save the visualization to an HTML file
-    net.show("triples_visualization.html")
+    net.show("visualization.html")
 
 
 def verification():
@@ -260,3 +233,118 @@ def upload():
 
     # Display widgets
     display(endpoint_url_widget, dataset_widget, visualize_widget, button)
+
+def store_results_in_rdf(new_d_values, prediction_intervals, d_key, e_key):
+    # Create a graph to store results
+    g_total = Graph()
+
+    # Add predictions to the graph
+    for i, d in enumerate(new_d_values):
+        lower_bound, upper_bound = prediction_intervals[i]  # Get bounds from prediction_intervals
+
+        vv_result = Cuds(ontology_type=MIO.dataset, description="VV Results")
+        vv_result.add(MIO.hasKey1, Literal(d))  # The key1 value
+        vv_result.add(MIO.hasKey2, Literal(e_key)) # The key2 value
+        vv_result.add(MIO.lowerBound, Literal(lower_bound))  # Use the lower_bound from prediction_intervals
+        vv_result.add(MIO.upperBound, Literal(upper_bound))  # Use the upper_bound from prediction_intervals
+        
+        # Add to total graph
+        g_total += vv_result.graph
+
+    output_file = "output"
+    iri = "cuds_iri_f373f80e-4909-45fb-957e-4cc88da788bc"
+
+    # # Serialize to TTL format
+    g_total.serialize(output_file+".ttl", format="ttl")
+
+    kb_instance = kb_toolbox()
+    # Upload the RDF to the knowledge base
+    kb_instance.import_ontology(output_file+".ttl")
+
+    # Visualize the RDF graph and save it as a PNG file
+    visualize_rdf(g_total, output_file+".png", iri)
+
+
+def extract_label(iri):
+    """Extract the last part of the IRI after the # or /"""
+    return iri.split('#')[-1].split('/')[-1]
+
+def visualize_rdf(graph, output, training_data_iri):
+    """ Visualizes the RDF graph with improved layout, labels, shapes, and training data connection."""
+    G = nx.DiGraph()  # Create a directed graph
+
+    # Add subject, object nodes, and edges with simplified labels
+    for subj, pred, obj in graph:
+        subj_label = extract_label(str(subj))
+        obj_label = extract_label(str(obj))
+        pred_label = extract_label(str(pred))
+
+        G.add_node(subj_label, label=subj_label)  # Add subject node with simplified label
+        G.add_node(obj_label, label=obj_label)  # Add object node with simplified label
+        G.add_edge(subj_label, obj_label, label=pred_label)  # Add edge with simplified predicate label
+
+    # Add training data IRI as a new node
+    training_label = extract_label(training_data_iri)
+    G.add_node(training_label, label=training_label)
+    
+    # Connect the training data IRI to the central node with the predicate 'has_vv_result'
+    central_node = list(G.nodes())[0]  # Get the central node (VV results)
+    G.add_edge(training_label, central_node, label='has_vv_result')
+
+    # Set up positions for a cleaner layout
+    pos = nx.spring_layout(G, seed=42, k=0.7)  # k controls the spacing
+
+    plt.figure(figsize=(12, 8))
+
+    # Define colors for nodes
+    iri_color = '#4682B4'  # Blue for IRIs
+    literal_color = '#FFD700'  # Gold for literals
+    dataset_color = '#FF6347'  # Red for datasets
+    edge_color = 'gray'  # Color for edges
+
+    # Separate nodes by type (IRIs, literals, etc.)
+    iri_nodes = [n for n in G.nodes if 'iri' in n]  # Simplified rule to detect IRIs
+    literal_nodes = [n for n in G.nodes if 'literal' in n]  # Simplified rule for literals
+    dataset_nodes = [n for n in G.nodes if 'dataset' in n]  # Simplified rule for datasets
+
+    # Draw nodes with shapes and colors based on type
+    nx.draw_networkx_nodes(G, pos, nodelist=iri_nodes, node_color=iri_color, node_shape='o', node_size=3000)
+    nx.draw_networkx_nodes(G, pos, nodelist=literal_nodes, node_color=literal_color, node_shape='D', node_size=3000)
+    nx.draw_networkx_nodes(G, pos, nodelist=dataset_nodes, node_color=dataset_color, node_shape='s', node_size=3000)
+
+    # Draw the edges with arrows and labels
+    nx.draw_networkx_edges(G, pos, edgelist=G.edges(), arrowstyle='-|>', arrowsize=20, edge_color=edge_color)
+    edge_labels = {(u, v): d['label'] for u, v, d in G.edges(data=True)}
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='black', label_pos=0.5)
+
+    # Draw node labels
+    node_labels = {node: node for node in G.nodes()}
+    nx.draw_networkx_labels(G, pos, labels=node_labels, font_size=10, font_weight='bold')
+
+    # Set title and save the graph as a PNG file
+    plt.axis('off')  # Hide the axis
+    plt.savefig(output, format="png")
+    
+
+def vv_from_yaml(yaml_file_path):
+    yaml_content = load_yaml_file(yaml_file_path)
+    workflow_step = yaml_content['steps'][0]
+    inputs = workflow_step['inputs']
+
+    database_url = inputs['database']
+    d_key = inputs['Key1']
+    e_key = inputs['Key2']
+    prediction_value = inputs['Prediction']
+
+    kb_instance = kb_toolbox()
+
+    new_d_values = [prediction_value]
+    save_figure = False  # You can modify based on other YAML inputs
+
+    # Run the training and prediction process
+    new_d_values, prediction_intervals = train_and_predict(kb_instance, new_d_values, save_figure, d_key, e_key)
+
+    # Store results in RDF and upload to KB
+    if prediction_intervals is not None:  # Ensure that predictions were successful
+        store_results_in_rdf(new_d_values, prediction_intervals, d_key, e_key)
+
