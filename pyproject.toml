@@ -27,3 +27,5 @@ dependencies = [
 [project.urls]
 repository = "https://github.com/H2020-OpenModel/OMI-VV/"
 
+[tool.setuptools.packages.find]
+where = ["."]
