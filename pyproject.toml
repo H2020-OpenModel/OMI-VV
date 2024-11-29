@@ -8,7 +8,7 @@ version = "2.0.0"
 description = "verification and validation for OpenModel"
 readme = "README.MD"
 python_requires = ">=3.6"
-authors = "Owain Beynon"
+authors = [{name = "Owain Beynon", email = "o.beynon@ucl.ac.uk"}]
 classifiers = [
      "Development Status :: 4 - Beta",
       "Programming Language :: Python"
