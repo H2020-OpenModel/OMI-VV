@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "vv"
 version = "0.0.1"
-python-required = ">=3.6"
+python_requires = ">=3.6"
 dependencies = [
     "numpy",
     "matplotlib",
