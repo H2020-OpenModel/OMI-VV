@@ -2,9 +2,25 @@
 requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
+[project]
 name = "vv"
 version = "0.0.1"
+python-required = ">=3.6"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "scikit-learn",
+    "ipywidgets",
+    "nonconformist",
+    "omikb",
+    "discomat",
+    # GitHub-hosted dependency
+    "discomat @ git+https://github.com/materials-discovery/discomat.git"
+]
+
+[project.optional-dependencies]
+
+[tool.setuptools]
 packages = ["find:."]
 python_requires = ">=3.6"
 
@@ -18,17 +34,4 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent"
-]
-
-[tool.setuptools.dependencies]
-install_requires = [
-    "numpy",
-    "matplotlib",
-    "scikit-learn",
-    "ipywidgets",
-    "nonconformist",
-    "omikb",
-    "discomat",
-    # GitHub-hosted dependency
-    "discomat @ git+https://github.com/materials-discovery/discomat.git"
 ]
