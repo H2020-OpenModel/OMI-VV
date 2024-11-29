@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "vv"
 version = "0.0.1"
 description = "verification and validation for OpenModel"
-readme = "README.MD"
+readme = "README.md"
 requires-python = ">=3.8"
 authors = [{name = "Owain Beynon", email = "o.beynon@ucl.ac.uk"}]
 classifiers = [
