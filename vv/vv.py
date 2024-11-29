@@ -12,7 +12,7 @@ from IPython.display import display
 from omikb.omikb import kb_toolbox
 import os
 import sys
-sys.path.append(os.path.abspath('./'))
+sys.path.append(os.path.abspath('../'))
 from discomat.cuds.cuds import Cuds
 from discomat.ontology.namespaces import MIO
 from rdflib import Literal, Graph
