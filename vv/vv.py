@@ -12,6 +12,8 @@ import ipywidgets as widgets
 from IPython.display import display
 from omikb.omikb import kb_toolbox
 import os
+import sys
+sys.path.append(os.path.abspath('../'))
 from ontology.cuds.cuds import Cuds
 from ontology.ontology.namespaces import MIO
 from rdflib import Literal, Graph
