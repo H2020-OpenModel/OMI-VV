@@ -30,6 +30,6 @@ dependencies = [
 repository = "https://github.com/H2020-OpenModel/OMI-VV/"
 
 # Explicitly specify the package directories
-[tool.setuptools]
-packages =  ["find:vv"]
+[tool.setuptools.package-data]
+packages =  ["vv"]
 
