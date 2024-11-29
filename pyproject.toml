@@ -4,8 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vv"
-version = "0.0.1"
+version = "2.0.0"
+description = "verification and validation for OpenModel"
+readme = "README.MD"
 python_requires = ">=3.6"
+authors = "Owain Beynon"
+classifiers = [
+     "Development Status :: 4 - Beta",
+      "Programming Language :: Python"
+]
+
 dependencies = [
     "numpy",
     "matplotlib",
@@ -20,18 +28,5 @@ dependencies = [
 
 [project.optional-dependencies]
 
-[tool.setuptools]
-packages = ["find:."]
-python_requires = ">=3.6"
-
-[tool.setuptools.metadata]
-author = "Owain Beynon"
-description = "Validation and Verification services for OpenModel"
-long_description = { file = "README.md" }
-long_description_content_type = "text/markdown"
-url = "https://github.com/H2020-OpenModel/OMI-VV/"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Operating System :: OS Independent"
-]
+[project.urls]
+repository = "https://github.com/H2020-OpenModel/OMI-VV/"
