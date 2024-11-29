@@ -20,7 +20,7 @@ dependencies = [
     "scikit-learn",
     "ipywidgets",
     "nonconformist",
-    "omikb @ git@github.com:H2020-OpenModel/OMIKB-toolbox.git" 
+    "omikb @ git@github.com:H2020-OpenModel/OMIKB-toolbox.git",
     "discomat @ git+https://github.com/materials-discovery/discomat.git"
 ]
 
