@@ -12,7 +12,8 @@ setup(
         'scikit-learn',
         'ipywidgets',
         'nonconformist',
-        'omikb'
+        'omikb',
+        'discomat'
     ],
     author="Owain Beynon",
     description="Validation and Verification services for OpenModel",
