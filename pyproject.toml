@@ -11,7 +11,7 @@ requires-python = ">=3.8"
 authors = [{name = "Owain Beynon", email = "o.beynon@ucl.ac.uk"}]
 classifiers = [
      "Development Status :: 4 - Beta",
-      "Programming Language :: Python"
+     "Programming Language :: Python"
 ]
 
 dependencies = [
@@ -30,3 +30,8 @@ dependencies = [
 
 [project.urls]
 repository = "https://github.com/H2020-OpenModel/OMI-VV/"
+
+# Explicitly specify the package directories
+[tool.setuptools]
+packages = ["vv"]  # or ["find:vv", "find:images"] if both are needed
+
