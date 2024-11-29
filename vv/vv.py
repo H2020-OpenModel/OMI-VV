@@ -308,7 +308,8 @@ def visualize_rdf_dot(graph, output, training_data_iri):
     dot.render(output_file, format='png', view=False)  # Avoid opening in headless environments
 
     print(f"Graph has been saved to {output_file}.png")
-
+    
+    
 def run_vv(yaml_file_path):
     # Load the YAML content
     yaml_content = load_yaml_file(yaml_file_path)
