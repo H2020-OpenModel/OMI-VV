@@ -11,8 +11,10 @@ import ipywidgets as widgets
 from IPython.display import display
 from omikb.omikb import kb_toolbox
 import os
-from .ontology.cuds.cuds import Cuds
-from .ontology.ontology.namespaces import MIO
+import sys
+sys.path.append(os.path.abspath('./'))
+from discomat.cuds.cuds import Cuds
+from discomat.ontology.namespaces import MIO
 from rdflib import Literal, Graph
 import networkx as nx
 from rdflib import Graph
