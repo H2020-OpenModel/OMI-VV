@@ -13,7 +13,6 @@ from IPython.display import display
 from omikb.omikb import kb_toolbox
 import sys
 import os
-sys.path.append(os.path.abspath('../'))
 from discomat.cuds.cuds import Cuds
 from discomat.cuds.session import Session
 from discomat.visualisation.cuds_vis import gvis
@@ -21,6 +20,9 @@ from discomat.ontology.namespaces import MIO
 import csv
 from rdflib import Literal, Graph
 import networkx as nx
+
+from graphviz import Digraph
+
 
 def load_yaml_file(filepath):
     with open(filepath, 'r') as file:
@@ -264,87 +266,108 @@ def store_results_in_rdf(new_d_values, prediction_intervals, d_key, e_key):
     # Visualize the RDF graph and save it as a PNG file
     visualize_rdf(g_total, output_file+".png", iri)
 
-
 def extract_label(iri):
     """Extract the last part of the IRI after the # or /"""
     return iri.split('#')[-1].split('/')[-1]
-
-def visualize_rdf(graph, output, training_data_iri):
-    """ Visualizes the RDF graph with improved layout, labels, shapes, and training data connection."""
-    G = nx.DiGraph()  # Create a directed graph
-
+    
+   
+def visualize_rdf_dot(graph, output, training_data_iri):
+    """ Visualizes the RDF graph using DOT with improved layout and customization of nodes and edges."""
+    
+    dot = Digraph(format='png', engine='dot')
+    
+    # Adjust graph layout properties to make it narrower and more suitable for A4 paper
+    dot.attr(dpi='300', size='8,5', nodesep='0.1', ranksep='0.3', rankdir='LR')  # Set the graph size to fit A4 aspect ratio
+    
     # Add subject, object nodes, and edges with simplified labels
     for subj, pred, obj in graph:
         subj_label = extract_label(str(subj))
         obj_label = extract_label(str(obj))
         pred_label = extract_label(str(pred))
 
-        G.add_node(subj_label, label=subj_label)  # Add subject node with simplified label
-        G.add_node(obj_label, label=obj_label)  # Add object node with simplified label
-        G.add_edge(subj_label, obj_label, label=pred_label)  # Add edge with simplified predicate label
+        # Add nodes with customized shapes and colors
+        dot.node(subj_label, subj_label, shape='rectangle', color='blue', style='filled', fillcolor='lightblue', fontcolor='black')  # Subject node (light blue)
+        dot.node(obj_label, obj_label, shape='rectangle', color='green', style='filled', fillcolor='lightgreen', fontcolor='black')  # Object node (light green)
+        
+        # Add edge with custom label and style
+        dot.edge(subj_label, obj_label, label=pred_label, color='gray', fontcolor='black')
 
-    # Add training data IRI as a new node
+    # Add training data IRI as a new node (customized)
     training_label = extract_label(training_data_iri)
-    G.add_node(training_label, label=training_label)
-    
-    # Connect the training data IRI to the central node with the predicate 'has_vv_result'
-    central_node = list(G.nodes())[0]  # Get the central node (VV results)
-    G.add_edge(training_label, central_node, label='has_vv_result')
+    dot.node(training_label, training_label, shape='rectangle', color='red', style='filled', fillcolor='salmon', fontcolor='black')  # Red rectangle node
 
-    # Set up positions for a cleaner layout
-    pos = nx.spring_layout(G, seed=42, k=0.7)  # k controls the spacing
+    # Connect the training data IRI to the central node with a custom predicate
+    central_node = list(graph.subjects())[0]  # Get the central node (VV results)
+    central_node_label = extract_label(str(central_node))
+    dot.edge(training_label, central_node_label, label='has_vv_result', color='purple', fontcolor='black')
 
-    plt.figure(figsize=(12, 8))
+    # Remove the .png extension from output filename if it exists
+    output_file = os.path.splitext(output)[0]  # Removes .png extension from the file name if it exists
 
-    # Define colors for nodes
-    iri_color = '#4682B4'  # Blue for IRIs
-    literal_color = '#FFD700'  # Gold for literals
-    dataset_color = '#FF6347'  # Red for datasets
-    edge_color = 'gray'  # Color for edges
+    # Render the DOT graph to a PNG image (without automatically opening it)
+    dot.render(output_file, format='png', view=False)  # Avoid opening in headless environments
 
-    # Separate nodes by type (IRIs, literals, etc.)
-    iri_nodes = [n for n in G.nodes if 'iri' in n]  # Simplified rule to detect IRIs
-    literal_nodes = [n for n in G.nodes if 'literal' in n]  # Simplified rule for literals
-    dataset_nodes = [n for n in G.nodes if 'dataset' in n]  # Simplified rule for datasets
-
-    # Draw nodes with shapes and colors based on type
-    nx.draw_networkx_nodes(G, pos, nodelist=iri_nodes, node_color=iri_color, node_shape='o', node_size=3000)
-    nx.draw_networkx_nodes(G, pos, nodelist=literal_nodes, node_color=literal_color, node_shape='D', node_size=3000)
-    nx.draw_networkx_nodes(G, pos, nodelist=dataset_nodes, node_color=dataset_color, node_shape='s', node_size=3000)
-
-    # Draw the edges with arrows and labels
-    nx.draw_networkx_edges(G, pos, edgelist=G.edges(), arrowstyle='-|>', arrowsize=20, edge_color=edge_color)
-    edge_labels = {(u, v): d['label'] for u, v, d in G.edges(data=True)}
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='black', label_pos=0.5)
-
-    # Draw node labels
-    node_labels = {node: node for node in G.nodes()}
-    nx.draw_networkx_labels(G, pos, labels=node_labels, font_size=10, font_weight='bold')
-
-    # Set title and save the graph as a PNG file
-    plt.axis('off')  # Hide the axis
-    plt.savefig(output, format="png")
-    
+    print(f"Graph has been saved to {output_file}.png")
 
 def vv_from_yaml(yaml_file_path):
+    # Load the YAML content
     yaml_content = load_yaml_file(yaml_file_path)
-    workflow_step = yaml_content['steps'][0]
-    inputs = workflow_step['inputs']
+    
+    # Locate the step with `postprocess` containing `run: vv`
+    inputs = None
+    for step in yaml_content.get('steps', []):
+        if 'postprocess' in step:
+            for post_step in step['postprocess']:
+                if post_step.get('run') == 'vv':  # Match the YAML's run value
+                    inputs = post_step.get('inputs', {})
+                    break
+            if inputs is not None:
+                break
 
-    database_url = inputs['database']
-    d_key = inputs['Key1']
-    e_key = inputs['Key2']
-    prediction_value = inputs['Prediction']
+    if inputs is None:
+        raise ValueError("No postprocess step found for 'vv'.")
 
+    # Extract values from the postprocess inputs
+    try:
+        database_url = inputs['database']
+        d_key = inputs['Key1']
+        e_key = inputs['Key2']
+        
+        # Dynamically extract the reference specified under 'Prediction'
+        prediction_ref = inputs['Prediction']
+        ref_path = prediction_ref["$ref"]
+        
+        # Resolve the reference to the actual data
+        ref_parts = ref_path.lstrip("#/").split("/")
+        resolved_value = yaml_content
+        for part in ref_parts:
+            resolved_value = resolved_value.get(part, {})
+
+        # Validate resolved value
+        if isinstance(resolved_value, list) and resolved_value:
+            prediction_value = float(resolved_value[0])
+        else:
+            raise ValueError(f"Prediction reference did not resolve to a non-empty list: {resolved_value}")
+        
+    except KeyError as e:
+        raise ValueError(f"Missing required input key: {e}")
+    except Exception as e:
+        raise ValueError(f"Error while processing inputs: {e}")
+
+    # Initialize your knowledge base instance
     kb_instance = kb_toolbox()
 
+    # Prepare the `new_d_values` list for prediction
     new_d_values = [prediction_value]
-    save_figure = False  # You can modify based on other YAML inputs
+    
+    # Optionally, decide whether to save a figure
+    save_figure = False
 
     # Run the training and prediction process
     new_d_values, prediction_intervals = train_and_predict(kb_instance, new_d_values, save_figure, d_key, e_key)
 
-    # Store results in RDF and upload to KB
-    if prediction_intervals is not None:  # Ensure that predictions were successful
+    # Store the results in RDF and upload to the KB if successful
+    if prediction_intervals is not None:
         store_results_in_rdf(new_d_values, prediction_intervals, d_key, e_key)
+
 
