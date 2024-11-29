@@ -11,16 +11,12 @@ from nonconformist.nc import AbsErrorErrFunc
 import ipywidgets as widgets
 from IPython.display import display
 from omikb.omikb import kb_toolbox
-import sys
 import os
-from discomat.cuds.cuds import Cuds
-from discomat.cuds.session import Session
-from discomat.visualisation.cuds_vis import gvis
-from discomat.ontology.namespaces import MIO
-import csv
+from ontology.cuds.cuds import Cuds
+from ontology.ontology.namespaces import MIO
 from rdflib import Literal, Graph
 import networkx as nx
-
+from rdflib import Graph
 from graphviz import Digraph
 
 
@@ -236,6 +232,49 @@ def upload():
     # Display widgets
     display(endpoint_url_widget, dataset_widget, visualize_widget, button)
 
+
+def visualize_rdf(graph, output, training_data_iri):
+    """ Visualizes the RDF graph using DOT with improved layout and customization of nodes and edges."""
+
+    dot = Digraph(format='png', engine='dot')
+
+    # Adjust graph layout properties to make it narrower and more suitable for A4 paper
+    dot.attr(dpi='300', size='8,5', nodesep='0.1', ranksep='0.3',
+             rankdir='LR')  # Set the graph size to fit A4 aspect ratio
+
+    # Add subject, object nodes, and edges with simplified labels
+    for subj, pred, obj in graph:
+        subj_label = extract_label(str(subj))
+        obj_label = extract_label(str(obj))
+        pred_label = extract_label(str(pred))
+
+        # Add nodes with customized shapes and colors
+        dot.node(subj_label, subj_label, shape='rectangle', color='blue', style='filled', fillcolor='lightblue',
+                 fontcolor='black')  # Subject node (light blue)
+        dot.node(obj_label, obj_label, shape='rectangle', color='green', style='filled', fillcolor='lightgreen',
+                 fontcolor='black')  # Object node (light green)
+
+        # Add edge with custom label and style
+        dot.edge(subj_label, obj_label, label=pred_label, color='gray', fontcolor='black')
+
+    # Add training data IRI as a new node (customized)
+    training_label = extract_label(training_data_iri)
+    dot.node(training_label, training_label, shape='rectangle', color='red', style='filled', fillcolor='salmon',
+             fontcolor='black')  # Red rectangle node
+
+    # Connect the training data IRI to the central node with a custom predicate
+    central_node = list(graph.subjects())[0]  # Get the central node (VV results)
+    central_node_label = extract_label(str(central_node))
+    dot.edge(training_label, central_node_label, label='has_vv_result', color='purple', fontcolor='black')
+
+    # Remove the .png extension from output filename if it exists
+    output_file = os.path.splitext(output)[0]  # Removes .png extension from the file name if it exists
+
+    # Render the DOT graph to a PNG image (without automatically opening it)
+    dot.render(output_file, format='png', view=False)  # Avoid opening in headless environments
+
+    print(f"Graph has been saved to {output_file}.png")
+
 def store_results_in_rdf(new_d_values, prediction_intervals, d_key, e_key):
     # Create a graph to store results
     g_total = Graph()
@@ -269,47 +308,7 @@ def store_results_in_rdf(new_d_values, prediction_intervals, d_key, e_key):
 def extract_label(iri):
     """Extract the last part of the IRI after the # or /"""
     return iri.split('#')[-1].split('/')[-1]
-    
-   
-def visualize_rdf_dot(graph, output, training_data_iri):
-    """ Visualizes the RDF graph using DOT with improved layout and customization of nodes and edges."""
-    
-    dot = Digraph(format='png', engine='dot')
-    
-    # Adjust graph layout properties to make it narrower and more suitable for A4 paper
-    dot.attr(dpi='300', size='8,5', nodesep='0.1', ranksep='0.3', rankdir='LR')  # Set the graph size to fit A4 aspect ratio
-    
-    # Add subject, object nodes, and edges with simplified labels
-    for subj, pred, obj in graph:
-        subj_label = extract_label(str(subj))
-        obj_label = extract_label(str(obj))
-        pred_label = extract_label(str(pred))
 
-        # Add nodes with customized shapes and colors
-        dot.node(subj_label, subj_label, shape='rectangle', color='blue', style='filled', fillcolor='lightblue', fontcolor='black')  # Subject node (light blue)
-        dot.node(obj_label, obj_label, shape='rectangle', color='green', style='filled', fillcolor='lightgreen', fontcolor='black')  # Object node (light green)
-        
-        # Add edge with custom label and style
-        dot.edge(subj_label, obj_label, label=pred_label, color='gray', fontcolor='black')
-
-    # Add training data IRI as a new node (customized)
-    training_label = extract_label(training_data_iri)
-    dot.node(training_label, training_label, shape='rectangle', color='red', style='filled', fillcolor='salmon', fontcolor='black')  # Red rectangle node
-
-    # Connect the training data IRI to the central node with a custom predicate
-    central_node = list(graph.subjects())[0]  # Get the central node (VV results)
-    central_node_label = extract_label(str(central_node))
-    dot.edge(training_label, central_node_label, label='has_vv_result', color='purple', fontcolor='black')
-
-    # Remove the .png extension from output filename if it exists
-    output_file = os.path.splitext(output)[0]  # Removes .png extension from the file name if it exists
-
-    # Render the DOT graph to a PNG image (without automatically opening it)
-    dot.render(output_file, format='png', view=False)  # Avoid opening in headless environments
-
-    print(f"Graph has been saved to {output_file}.png")
-    
-    
 def run_vv(yaml_file_path):
     # Load the YAML content
     yaml_content = load_yaml_file(yaml_file_path)
