@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vv"
-version = "2.0.0"
+version = "0.0.1"
 description = "verification and validation for OpenModel"
 readme = "README.MD"
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 authors = [{name = "Owain Beynon", email = "o.beynon@ucl.ac.uk"}]
 classifiers = [
      "Development Status :: 4 - Beta",
@@ -19,7 +19,9 @@ dependencies = [
     "matplotlib",
     "scikit-learn",
     "ipywidgets",
-    "nonconformist"
+    "nonconformist",
+    "omikb @ git+https://github.com/H2020-OpenModel/OMIKB-toolbox.git",
+    "discomat @ git+https://github.com/materials-discovery/discomat.git"
 ]
 
 [project.urls]
