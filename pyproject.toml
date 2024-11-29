@@ -24,8 +24,6 @@ dependencies = [
     "discomat @ git+https://github.com/materials-discovery/discomat.git"
 ]
 
-[project.optional-dependencies]
-
 [project.urls]
 repository = "https://github.com/H2020-OpenModel/OMI-VV/"
 
