@@ -90,4 +90,4 @@ The `verification()` function uses a neural network (multi layer perception regr
 Output.txt will contain the predicted values, and a confidence interval which is determined through conformal prediction. If plotting is specified, a plot of the predicted values (output.png) is also created. 
 
 
-![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/images/Figure7.png)
+![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/Images/Figure7.png)
