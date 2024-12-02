@@ -20,6 +20,7 @@ dependencies = [
     "scikit-learn",
     "ipywidgets",
     "nonconformist",
+    "discomat @ git+https://github.com/materials-discovery/discomat.git"
 ]
 
 [project.urls]
