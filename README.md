@@ -13,7 +13,7 @@ which may correspond to performing additional calculations.
 In that respect, validation addresses the more overarching question of “are the results correct?” which are important concepts 
 when attempting to take well-informed decisions for the design of new materials based on simulations. 
 
-![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/images/Figure1.png)
+![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/Images/Figure1.png)
 
 ## Installation 
 
@@ -46,12 +46,12 @@ predicates of the values stored in the desired knowledge graph are used “has_k
 needing to be validated under the “prediction” key, which is ‘kpoints’ in this example. This is achieved through calling on the variable 
 #/data/kpoints_scf which was defined in the previous step of the workflow. Once the calculation and V&V workflow is defined, the YAML is executed as normal with ExecFlow. 
 
-![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/images/Figure2.png)
+![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/Images/Figure2.png)
 
 Once the workflow is executed by ExecFlow, a Quantum Espresso calculation is performed on the silicon model, depicting below
 the workflow inputs and output of the calculation. When the calculation has completed, the postprocessing steps are executed, in this case the V&V. 
 
-![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/images/Figure3.png)
+![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/Images/Figure3.png)
 
 The chosen k-point setting is parsed to the MLP-NN model of the V&V services, where the model will make a prediction on this value based on training 
 from similar data stored in the knowledgebase, which were specified by “Key1” and “Key2”. The MLP-NN model will output a prediction 
@@ -62,7 +62,7 @@ the results of the calculation. Finally, the results from the V&V are ontologise
 the predictions made by the MLP-NN model, and the provenance of the data, showing the parent graph in the knowledgebase from where the training data was 
 obtained. The V&V results are subsequently uploaded back into the knowledgebase, with the validation results of the specified workflow stored for future reference. 
 
-![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/images/Figure4.png)
+![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/Images/Figure4.png)
 
 ### Using the GUI
 
@@ -76,14 +76,14 @@ After installation the vv services can be imported as a normal Python package.
 
 An interactive widget is loaded for the user. 
 
-![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/images/Figure5.png)
+![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/Images/Figure5.png)
 
 
 After the widget is loaded the user can fill out the required fields. Firstly, the database/ knowledge graph to train from. In this case `https://openmodel.app/fuseki3/dataset`. 
 Secondly, the desired prediction values. Finally, the keys for training are added. In this case, we're training from atomisation energy and distance values in the knowledgebase, where we're asking the ML 
 model to predict the atomisation energy at unknown distance values, 1.1, 1.2, and 1.3 Ang. We fill the plot box to get a visual output, and run the V&V.
 
-![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/images/Figure6.png)
+![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/Images/Figure6.png)
 
 
 The `verification()` function uses a neural network (multi layer perception regression) to predict new values, in this case atomisation energy at distance 1.1, 1.2, 1.3 Ang.
