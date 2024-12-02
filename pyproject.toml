@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vv"
+version = "2.1.0"
+description = "verification and validation for OpenModel"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "Owain Beynon", email = "o.beynon@ucl.ac.uk"}]
+classifiers = [
+     "Development Status :: 4 - Beta",
+     "Programming Language :: Python"
+]
+
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "scikit-learn",
+    "ipywidgets",
+    "nonconformist",
+    "discomat @ git+https://github.com/materials-discovery/discomat.git"
+]
+
+[project.urls]
+repository = "https://github.com/H2020-OpenModel/OMI-VV/"
+
+[tool.setuptools.packages.find]
+where = ["."]

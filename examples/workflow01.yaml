@@ -1,0 +1,73 @@
+---
+data:
+  pw_parameters:
+    CONTROL:
+      verbosity: high
+      restart_mode: from_scratch
+      calculation: relax
+      etot_conv_thr: 1.0e-4
+      forc_conv_thr: 1.0e-4
+    SYSTEM:
+      ecutwfc: 30
+      occupations: smearing
+      smearing: mp
+      degauss: 0.01
+    ELECTRONS:
+      electron_maxstep: 50
+      conv_thr: 1.0e-06
+      mixing_beta: 0.3
+  metadata:
+    options:
+      withmpi: true
+      resources:
+        num_machines: 1
+        num_mpiprocs_per_machine: 4
+  pseudos:
+    Si:
+      group: SSSP/1.1/PBE/efficiency
+      element: Si
+  structure:
+    atoms:
+    - symbols: Si
+      position:
+      - 0
+      - 0
+      - 0
+    cell:
+    - - 0
+      - 2.715
+      - 2.715
+    - - 2.715
+      - 0
+      - 2.715
+    - - 2.715
+      - 2.715
+      - 0
+  kpoints_scf:
+  - 4
+  - 4
+  - 4
+
+steps:
+  - calcjob: quantumespresso.pw
+    inputs:
+      code: pw@localhost
+      parameters:
+        "$ref": "#/data/pw_parameters"
+      metadata:
+        "$ref": "#/data/metadata"
+      kpoints:
+        "$ref": "#/data/kpoints_scf"
+      pseudos:
+        "$ref": "#/data/pseudos"
+      structure:
+        "$ref": "#/data/structure"
+    postprocess:
+      - run: vv  
+        inputs:
+          database: "http://openmodel.app/kb/data"
+          Key1: "has_kpoint_mesh"
+          Key2: "has_total_energy"
+          Prediction:
+            "$ref": "#/data/kpoints_scf"
+...

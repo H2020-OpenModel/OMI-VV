@@ -1,0 +1,16 @@
+@prefix ns1: <http//materials-discovery.org/semantics/mio#> .
+@prefix ns2: <http://www.ddmd.io/mio/cuds#> .
+
+<https://www.ddmd.io/mio#cuds_iri_cb5e271b-f64d-4185-85d3-91cb1c055dae> a ns1:dataset,
+        ns2:Cuds ;
+    ns1:hasKey1 "4.0" ;
+    ns1:hasKey2 "has_total_energy" ;
+    ns1:lowerBound "-153.59580069742674" ;
+    ns1:upperBound "-148.3333531380522" ;
+    ns2:CreationTime "2024-12-02 11:05:10.836072" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_cb5e271b-f64d-4185-85d3-91cb1c055dae> ;
+    ns2:description "VV Results" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_cb5e271b-f64d-4185-85d3-91cb1c055dae> ;
+    ns2:label "sell_grow" ;
+    ns2:uuid "cb5e271b-f64d-4185-85d3-91cb1c055dae" .
+
