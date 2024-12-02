@@ -1,0 +1,463 @@
+@prefix ns1: <http://www.ddmd.io/miso/> .
+@prefix ns2: <http://www.ddmd.io/mio/cuds#> .
+
+<https://www.ddmd.io/mio#cuds_iri_a5b2bb6f-f865-43ef-a1a8-710403fb312d> a ns2:Cuds,
+        ns1:Simulation ;
+    ns2:CreationTime "2024-11-27 11:59:06.853839" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_a5b2bb6f-f865-43ef-a1a8-710403fb312d> ;
+    ns2:Session "None" ;
+    ns2:description "Silicon K-point Energy Simulation" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_a5b2bb6f-f865-43ef-a1a8-710403fb312d> ;
+    ns2:label "risk_session" ;
+    ns2:uuid "a5b2bb6f-f865-43ef-a1a8-710403fb312d" ;
+    ns1:has_simulation_result <https://www.ddmd.io/mio#cuds_iri_0388fdac-177d-4361-80ea-8633cb457044>,
+        <https://www.ddmd.io/mio#cuds_iri_0b689394-544f-40af-b05e-2124a09e7191>,
+        <https://www.ddmd.io/mio#cuds_iri_260cc1b5-1906-4388-8191-1ca685e67106>,
+        <https://www.ddmd.io/mio#cuds_iri_28636a3d-9ca0-4a08-a36e-92fb6c9f8f3d>,
+        <https://www.ddmd.io/mio#cuds_iri_2b49cc9a-4dca-4142-aea2-1a703f663d10>,
+        <https://www.ddmd.io/mio#cuds_iri_3780d5f5-eaf9-42ad-bb3e-119ed80780dd>,
+        <https://www.ddmd.io/mio#cuds_iri_3e35311c-ee41-4273-bd44-b46acf41d94f>,
+        <https://www.ddmd.io/mio#cuds_iri_4c48e100-29a8-4ac4-8e95-977a41069857>,
+        <https://www.ddmd.io/mio#cuds_iri_4d7b6997-99fc-4a21-a6e4-6ff4c4f5217e>,
+        <https://www.ddmd.io/mio#cuds_iri_53767618-7fd1-492c-acf2-6195e2489966>,
+        <https://www.ddmd.io/mio#cuds_iri_58065fbd-8429-4087-a708-321492a82a4e>,
+        <https://www.ddmd.io/mio#cuds_iri_5a8b6d02-fbb3-40bb-8941-8d84dd5a39bf>,
+        <https://www.ddmd.io/mio#cuds_iri_62a4892f-73eb-415c-bef5-fd15b50431a6>,
+        <https://www.ddmd.io/mio#cuds_iri_6587c13f-3e23-4da5-8c59-ac5154d42520>,
+        <https://www.ddmd.io/mio#cuds_iri_7678f429-1c53-45bd-95a8-1cd2d32e72ad>,
+        <https://www.ddmd.io/mio#cuds_iri_7a5ebb40-1a21-47a4-9c5d-9fc004a0755b>,
+        <https://www.ddmd.io/mio#cuds_iri_7b779830-832e-4ba3-b254-e3371b41d0c1>,
+        <https://www.ddmd.io/mio#cuds_iri_80e87d18-33c1-46d7-a99c-07c95634159f>,
+        <https://www.ddmd.io/mio#cuds_iri_8ee7b2da-bd75-47e4-b939-e8fa02d205d2>,
+        <https://www.ddmd.io/mio#cuds_iri_a14a7846-17c9-4738-a4c0-ef28c05d0c1b>,
+        <https://www.ddmd.io/mio#cuds_iri_aa050df5-375f-46b2-b035-b92da9ca9e52>,
+        <https://www.ddmd.io/mio#cuds_iri_b63dd504-d28d-4182-b0f3-277046713147>,
+        <https://www.ddmd.io/mio#cuds_iri_bd64615e-61d4-47cc-bb2b-d13bb180d7e1>,
+        <https://www.ddmd.io/mio#cuds_iri_c7d76c2d-846e-4d74-b860-4f8083b84fdc>,
+        <https://www.ddmd.io/mio#cuds_iri_d634f018-d052-4f13-afec-65d1679acfb5>,
+        <https://www.ddmd.io/mio#cuds_iri_dc48ff4f-3eaf-41a7-a724-8484fff3ac74>,
+        <https://www.ddmd.io/mio#cuds_iri_dc837ed3-c763-406d-8c79-16390c2eefe8>,
+        <https://www.ddmd.io/mio#cuds_iri_ef8d4d1c-3f0d-4791-b74a-8f8d5f554f90>,
+        <https://www.ddmd.io/mio#cuds_iri_fce69890-338d-4cc8-88e2-24e965d07afb>,
+        <https://www.ddmd.io/mio#cuds_iri_ff8231eb-4806-4575-ba43-47b6293e1081> .
+
+<https://www.ddmd.io/mio#cuds_iri_0388fdac-177d-4361-80ea-8633cb457044> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:48.850276" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_0388fdac-177d-4361-80ea-8633cb457044> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=13" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_0388fdac-177d-4361-80ea-8633cb457044> ;
+    ns2:label "method_path" ;
+    ns2:uuid "0388fdac-177d-4361-80ea-8633cb457044" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "13" ;
+    ns1:has_total_energy "-152.46746151186" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_0b689394-544f-40af-b05e-2124a09e7191> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:37.238492" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_0b689394-544f-40af-b05e-2124a09e7191> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=10" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_0b689394-544f-40af-b05e-2124a09e7191> ;
+    ns2:label "biology_grocery" ;
+    ns2:uuid "0b689394-544f-40af-b05e-2124a09e7191" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "10" ;
+    ns1:has_total_energy "-152.46502323585" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_260cc1b5-1906-4388-8191-1ca685e67106> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:33.869271" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_260cc1b5-1906-4388-8191-1ca685e67106> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=9" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_260cc1b5-1906-4388-8191-1ca685e67106> ;
+    ns2:label "lizard_affair" ;
+    ns2:uuid "260cc1b5-1906-4388-8191-1ca685e67106" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "9" ;
+    ns1:has_total_energy "-152.46880507392" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_28636a3d-9ca0-4a08-a36e-92fb6c9f8f3d> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:40.732828" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_28636a3d-9ca0-4a08-a36e-92fb6c9f8f3d> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=11" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_28636a3d-9ca0-4a08-a36e-92fb6c9f8f3d> ;
+    ns2:label "jaguar_pumpkin" ;
+    ns2:uuid "28636a3d-9ca0-4a08-a36e-92fb6c9f8f3d" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "11" ;
+    ns1:has_total_energy "-152.46732314198" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_2b49cc9a-4dca-4142-aea2-1a703f663d10> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:13.771238" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_2b49cc9a-4dca-4142-aea2-1a703f663d10> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=2" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_2b49cc9a-4dca-4142-aea2-1a703f663d10> ;
+    ns2:label "cheese_month" ;
+    ns2:uuid "2b49cc9a-4dca-4142-aea2-1a703f663d10" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "2" ;
+    ns1:has_total_energy "-153.30519007432" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_3780d5f5-eaf9-42ad-bb3e-119ed80780dd> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:00:35.513010" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_3780d5f5-eaf9-42ad-bb3e-119ed80780dd> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=21" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_3780d5f5-eaf9-42ad-bb3e-119ed80780dd> ;
+    ns2:label "lazy_violin" ;
+    ns2:uuid "3780d5f5-eaf9-42ad-bb3e-119ed80780dd" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "21" ;
+    ns1:has_total_energy "-152.46879840713" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_3e35311c-ee41-4273-bd44-b46acf41d94f> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:00:43.756119" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_3e35311c-ee41-4273-bd44-b46acf41d94f> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=22" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_3e35311c-ee41-4273-bd44-b46acf41d94f> ;
+    ns2:label "exile_voice" ;
+    ns2:uuid "3e35311c-ee41-4273-bd44-b46acf41d94f" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "22" ;
+    ns1:has_total_energy "-152.4686393566" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_4c48e100-29a8-4ac4-8e95-977a41069857> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:02:20.526784" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_4c48e100-29a8-4ac4-8e95-977a41069857> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=30" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_4c48e100-29a8-4ac4-8e95-977a41069857> ;
+    ns2:label "rack_cigar" ;
+    ns2:uuid "4c48e100-29a8-4ac4-8e95-977a41069857" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "30" ;
+    ns1:has_total_energy "-152.46870207883" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_4d7b6997-99fc-4a21-a6e4-6ff4c4f5217e> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:01:50.421964" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_4d7b6997-99fc-4a21-a6e4-6ff4c4f5217e> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=28" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_4d7b6997-99fc-4a21-a6e4-6ff4c4f5217e> ;
+    ns2:label "olive_trouble" ;
+    ns2:uuid "4d7b6997-99fc-4a21-a6e4-6ff4c4f5217e" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "28" ;
+    ns1:has_total_energy "-152.46873228347" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_53767618-7fd1-492c-acf2-6195e2489966> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:00:52.611251" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_53767618-7fd1-492c-acf2-6195e2489966> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=23" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_53767618-7fd1-492c-acf2-6195e2489966> ;
+    ns2:label "captain_nest" ;
+    ns2:uuid "53767618-7fd1-492c-acf2-6195e2489966" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "23" ;
+    ns1:has_total_energy "-152.46857078391" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_58065fbd-8429-4087-a708-321492a82a4e> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:00:02.922763" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_58065fbd-8429-4087-a708-321492a82a4e> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=16" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_58065fbd-8429-4087-a708-321492a82a4e> ;
+    ns2:label "lion_leaf" ;
+    ns2:uuid "58065fbd-8429-4087-a708-321492a82a4e" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "16" ;
+    ns1:has_total_energy "-152.46781947761" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_5a8b6d02-fbb3-40bb-8941-8d84dd5a39bf> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:00:08.625333" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_5a8b6d02-fbb3-40bb-8941-8d84dd5a39bf> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=17" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_5a8b6d02-fbb3-40bb-8941-8d84dd5a39bf> ;
+    ns2:label "couch_unaware" ;
+    ns2:uuid "5a8b6d02-fbb3-40bb-8941-8d84dd5a39bf" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "17" ;
+    ns1:has_total_energy "-152.46860724716" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_62a4892f-73eb-415c-bef5-fd15b50431a6> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:57.869137" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_62a4892f-73eb-415c-bef5-fd15b50431a6> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=15" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_62a4892f-73eb-415c-bef5-fd15b50431a6> ;
+    ns2:label "promote_dilemma" ;
+    ns2:uuid "62a4892f-73eb-415c-bef5-fd15b50431a6" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "15" ;
+    ns1:has_total_energy "-152.46854792635" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_6587c13f-3e23-4da5-8c59-ac5154d42520> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:01:24.436730" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_6587c13f-3e23-4da5-8c59-ac5154d42520> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=26" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_6587c13f-3e23-4da5-8c59-ac5154d42520> ;
+    ns2:label "coil_acoustic" ;
+    ns2:uuid "6587c13f-3e23-4da5-8c59-ac5154d42520" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "26" ;
+    ns1:has_total_energy "-152.46859976403" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_7678f429-1c53-45bd-95a8-1cd2d32e72ad> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:00:20.943387" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_7678f429-1c53-45bd-95a8-1cd2d32e72ad> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=19" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_7678f429-1c53-45bd-95a8-1cd2d32e72ad> ;
+    ns2:label "conduct_glow" ;
+    ns2:uuid "7678f429-1c53-45bd-95a8-1cd2d32e72ad" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "19" ;
+    ns1:has_total_energy "-152.46846493163" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_7a5ebb40-1a21-47a4-9c5d-9fc004a0755b> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:01:13.139274" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_7a5ebb40-1a21-47a4-9c5d-9fc004a0755b> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=25" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_7a5ebb40-1a21-47a4-9c5d-9fc004a0755b> ;
+    ns2:label "shaft_credit" ;
+    ns2:uuid "7a5ebb40-1a21-47a4-9c5d-9fc004a0755b" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "25" ;
+    ns1:has_total_energy "-152.4687476579" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_7b779830-832e-4ba3-b254-e3371b41d0c1> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:11.046883" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_7b779830-832e-4ba3-b254-e3371b41d0c1> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=1" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_7b779830-832e-4ba3-b254-e3371b41d0c1> ;
+    ns2:label "kite_tennis" ;
+    ns2:uuid "7b779830-832e-4ba3-b254-e3371b41d0c1" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "1" ;
+    ns1:has_total_energy "-147.75702749652" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_80e87d18-33c1-46d7-a99c-07c95634159f> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:19.005684" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_80e87d18-33c1-46d7-a99c-07c95634159f> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=4" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_80e87d18-33c1-46d7-a99c-07c95634159f> ;
+    ns2:label "lunar_power" ;
+    ns2:uuid "80e87d18-33c1-46d7-a99c-07c95634159f" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "4" ;
+    ns1:has_total_energy "-152.39358315002" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_8ee7b2da-bd75-47e4-b939-e8fa02d205d2> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:00:14.561021" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_8ee7b2da-bd75-47e4-b939-e8fa02d205d2> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=18" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_8ee7b2da-bd75-47e4-b939-e8fa02d205d2> ;
+    ns2:label "garment_letter" ;
+    ns2:uuid "8ee7b2da-bd75-47e4-b939-e8fa02d205d2" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "18" ;
+    ns1:has_total_energy "-152.46870792928" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_a14a7846-17c9-4738-a4c0-ef28c05d0c1b> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:53.269719" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_a14a7846-17c9-4738-a4c0-ef28c05d0c1b> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=14" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_a14a7846-17c9-4738-a4c0-ef28c05d0c1b> ;
+    ns2:label "giggle_exhaust" ;
+    ns2:uuid "a14a7846-17c9-4738-a4c0-ef28c05d0c1b" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "14" ;
+    ns1:has_total_energy "-152.46828193507" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_aa050df5-375f-46b2-b035-b92da9ca9e52> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:21.766648" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_aa050df5-375f-46b2-b035-b92da9ca9e52> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=5" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_aa050df5-375f-46b2-b035-b92da9ca9e52> ;
+    ns2:label "body_gym" ;
+    ns2:uuid "aa050df5-375f-46b2-b035-b92da9ca9e52" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "5" ;
+    ns1:has_total_energy "-152.47345128159" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_b63dd504-d28d-4182-b0f3-277046713147> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:44.867151" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_b63dd504-d28d-4182-b0f3-277046713147> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=12" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_b63dd504-d28d-4182-b0f3-277046713147> ;
+    ns2:label "sick_vote" ;
+    ns2:uuid "b63dd504-d28d-4182-b0f3-277046713147" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "12" ;
+    ns1:has_total_energy "-152.46813159218" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_bd64615e-61d4-47cc-bb2b-d13bb180d7e1> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:00:27.844746" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_bd64615e-61d4-47cc-bb2b-d13bb180d7e1> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=20" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_bd64615e-61d4-47cc-bb2b-d13bb180d7e1> ;
+    ns2:label "call_hole" ;
+    ns2:uuid "bd64615e-61d4-47cc-bb2b-d13bb180d7e1" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "20" ;
+    ns1:has_total_energy "-152.46851418423" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_c7d76c2d-846e-4d74-b860-4f8083b84fdc> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:01:02.589837" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_c7d76c2d-846e-4d74-b860-4f8083b84fdc> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=24" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_c7d76c2d-846e-4d74-b860-4f8083b84fdc> ;
+    ns2:label "carpet_negative" ;
+    ns2:uuid "c7d76c2d-846e-4d74-b860-4f8083b84fdc" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "24" ;
+    ns1:has_total_energy "-152.46871963018" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_d634f018-d052-4f13-afec-65d1679acfb5> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:30.657612" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_d634f018-d052-4f13-afec-65d1679acfb5> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=8" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_d634f018-d052-4f13-afec-65d1679acfb5> ;
+    ns2:label "answer_early" ;
+    ns2:uuid "d634f018-d052-4f13-afec-65d1679acfb5" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "8" ;
+    ns1:has_total_energy "-152.46508133215" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_dc48ff4f-3eaf-41a7-a724-8484fff3ac74> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:02:04.733348" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_dc48ff4f-3eaf-41a7-a724-8484fff3ac74> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=29" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_dc48ff4f-3eaf-41a7-a724-8484fff3ac74> ;
+    ns2:label "layer_monster" ;
+    ns2:uuid "dc48ff4f-3eaf-41a7-a724-8484fff3ac74" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "29" ;
+    ns1:has_total_energy "-152.46865377863" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_dc837ed3-c763-406d-8c79-16390c2eefe8> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:24.517678" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_dc837ed3-c763-406d-8c79-16390c2eefe8> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=6" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_dc837ed3-c763-406d-8c79-16390c2eefe8> ;
+    ns2:label "curious_live" ;
+    ns2:uuid "dc837ed3-c763-406d-8c79-16390c2eefe8" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "6" ;
+    ns1:has_total_energy "-152.46152589279" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_ef8d4d1c-3f0d-4791-b74a-8f8d5f554f90> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:27.610631" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_ef8d4d1c-3f0d-4791-b74a-8f8d5f554f90> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=7" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_ef8d4d1c-3f0d-4791-b74a-8f8d5f554f90> ;
+    ns2:label "stomach_river" ;
+    ns2:uuid "ef8d4d1c-3f0d-4791-b74a-8f8d5f554f90" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "7" ;
+    ns1:has_total_energy "-152.45247103283" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_fce69890-338d-4cc8-88e2-24e965d07afb> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 12:01:36.898045" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_fce69890-338d-4cc8-88e2-24e965d07afb> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=27" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_fce69890-338d-4cc8-88e2-24e965d07afb> ;
+    ns2:label "senior_unlock" ;
+    ns2:uuid "fce69890-338d-4cc8-88e2-24e965d07afb" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "27" ;
+    ns1:has_total_energy "-152.4687122831" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
+<https://www.ddmd.io/mio#cuds_iri_ff8231eb-4806-4575-ba43-47b6293e1081> a ns2:Cuds,
+        ns1:SimulationResult ;
+    ns2:CreationTime "2024-11-27 11:59:16.393671" ;
+    ns2:PID <http://www.ddmd.io/mio#cuds_pid_ff8231eb-4806-4575-ba43-47b6293e1081> ;
+    ns2:Session "None" ;
+    ns2:description "Simulation result for k=3" ;
+    ns2:iri <https://www.ddmd.io/mio#cuds_iri_ff8231eb-4806-4575-ba43-47b6293e1081> ;
+    ns2:label "hip_alone" ;
+    ns2:uuid "ff8231eb-4806-4575-ba43-47b6293e1081" ;
+    ns1:has_charge_density_cutoff "240.0" ;
+    ns1:has_kpoint_mesh "3" ;
+    ns1:has_total_energy "-152.17558364139" ;
+    ns1:has_wavefunction_cutoff "30.0" .
+
