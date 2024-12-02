@@ -6,11 +6,9 @@
 
 In the Verification and Validations services, verification is defined as confirmation through objective evidence to 
 determine whether specified requirements have been fulfilled, where the objective evidence for verification may be determined 
-through performing alternative and additional calculations.  
-For OpenModel, verification addresses such user question as “are we implementing the model correctly?”.  
+through performing alternative and additional calculations.  For OpenModel, verification addresses such user question as “are we implementing the model correctly?”.  
 Validation is defined as confirmation through the provision of objective evidence which ensure the requirements for specified application have been fulfilled, 
-which may correspond to performing additional calculations. 
-In that respect, validation addresses the more overarching question of “are the results correct?” which are important concepts 
+which may correspond to performing additional calculations. In that respect, validation addresses the more overarching question of “are the results correct?” which are important concepts 
 when attempting to take well-informed decisions for the design of new materials based on simulations. 
 
 ![alt text](https://github.com/H2020-OpenModel/OMI-VV/blob/main/Images/Figure1.png)
